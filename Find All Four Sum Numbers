@@ -1,0 +1,77 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function template for C++
+
+class Solution{
+    public:
+    // arr[] : int input array of integers
+    // k : the quadruple sum required
+    vector<vector<int> > fourSum(vector<int> &arr, int k) {
+        // Your code goes here
+        vector<vector<int>> ans;
+        if(arr.size()<=3){
+            return ans;
+        }
+        sort(arr.begin(),arr.end());
+        for(int i=0;i<arr.size()-3;i++){
+            for(int j=i+1;j<arr.size()-2;j++){
+                int start = j+1;
+                int end = arr.size()-1;
+                while(start<end){
+                    if((arr[start] + arr[end]) > (k - (arr[i] + arr[j]))){end--;}
+                    else if(arr[start] + arr[end] < k - (arr[i]+arr[j])){start ++;}
+                    else{
+                        vector<int> res(4);
+                        res[0] = arr[i];
+                        res[1] = arr[j];
+                        res[2] = arr[start];
+                        res[3] = arr[end];
+                        ans.push_back(res);
+                        while(start<end && arr[start] == res[2]){start ++;}
+                        while(start<end && arr[end] == res[3]){end--;}
+                    }
+                }
+                while((j<arr.size()-2) && (arr[j] == arr[j+1])){
+                    j++;
+                }
+            }
+            while((i<arr.size()-3) && (arr[i] == arr[i+1])){
+                    i++;
+                }
+        }
+        return ans;
+    }
+    
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k, i;
+        cin >> n >> k;
+        vector<int> a(n);
+        for (i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+        Solution ob;
+        vector<vector<int> > ans = ob.fourSum(a, k);
+        for (auto &v : ans) {
+            for (int &u : v) {
+                cout << u << " ";
+            }
+            cout << "$";
+        }
+        if (ans.empty()) {
+            cout << -1;
+        }
+        cout << "\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
