@@ -1,0 +1,59 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution
+{
+	public:
+        void solc(vector<string> &ans, string &s,int i ){
+            if(i==s.length()  ){
+                ans.push_back(s);
+                return;
+            }
+            else{
+                for(int j=0;j<s.length();j++){
+                    swap(s[i],s[j]);
+                    solc(ans,s,i+1);
+                    swap(s[j],s[i]);
+                }
+            }
+        }
+        vector<string>find_permutation(string s)
+        {
+            // Code here there
+            int n=s.length(),i=0;
+            vector<string> ans,a;
+            solc(ans,s,i);
+            for(int k=0;k<ans.size();k++){
+                if(find(a.begin(), a.end(), ans[k])==a.end()){
+                    a.push_back(ans[k]);
+                }
+            }
+            sort(a.begin(), a.end());
+            return a;
+        }
+};
+
+
+
+//{ Driver Code Starts.
+int main(){
+    int t;
+    cin >> t;
+    while(t--)
+    {
+	    string S;
+	    cin >> S;
+	    Solution ob;
+	    vector<string> ans = ob.find_permutation(S);
+	    for(auto i: ans)
+	    {
+	    	cout<<i<<" ";
+	    }
+	    cout<<"\n";
+    }
+	return 0;
+}
+
+// } Driver Code Ends
